@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class MyQueue {
+public:
+    int *arr;
+    int front, rear, sizee;
+
+    MyQueue(int s) {
+        arr = new int[s];
+        front = rear = -1;
+        sizee = s;
+    }
+
+    // Check if queue is empty
+    bool IsEmpty() {
+        return front == -1;
+    }
+
+    // Check if queue is full (circular)
+    bool IsFull() {
+        return (rear + 1) % sizee == front;
+    }
+
+    // Add element to the queue
+    void push(int x) {
+        if (IsFull()) {
+            cout << "Queue is overflow\n";
+        } else if (IsEmpty()) {
+            front = rear = 0;
+            arr[0] = x;
+        } else {
+            rear = (rear + 1) % sizee;
+            arr[rear] = x;
+        }
+    }
+
+    // Remove element from the queue
+    void pop() {
+        if (IsEmpty()) {
+            cout << "Queue is underflow\n";
+        } else if (front == rear) {
+            front = rear = -1;
+        } else {
+            front = (front + 1) % sizee;
+        }
+    }
+
+    // View the front element
+    int peek() {
+        if (IsEmpty()) {
+            cout << "Queue is Empty\n";
+            return -1;
+        } else {
+            return arr[front];
+        }
+    }
+};
+
+int main() {
+    MyQueue q(5);
+
+    q.push(5);
+    q.push(54);
+    q.push(53);
+    q.push(52);
+    q.push(51);
+
+    q.pop();
+
+    q.push(22);
+
+    cout << q.peek() << endl;
+    cout << q.IsFull() << endl;
+    cout << q.arr[2] << endl;
+
+    return 0;
+}
